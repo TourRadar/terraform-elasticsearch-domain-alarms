@@ -6,6 +6,7 @@ variable "actions" {
 variable "ok_actions" {
   description = "List of actions what should be executed"
   type        = list(string)
+  default = []
 }
 
 variable "elasticsearch_domain_arn" {
