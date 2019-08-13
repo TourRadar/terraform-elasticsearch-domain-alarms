@@ -166,7 +166,7 @@ variable "sql_unhealthy_treat_missing_data" {
 
 
 variable "freestorage_low_checks" {
-  type    = "list"
+  type    = set(string)
   default = [15, 10, 5, 1]
 }
 

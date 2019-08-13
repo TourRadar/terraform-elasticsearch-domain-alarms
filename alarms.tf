@@ -1,12 +1,14 @@
 locals {
   parts       = split(":", var.elasticsearch_domain_arn)
-  partsDomain = split("/", parts[6])
+  partsDomain = split("/", local.parts[5])
 
   alarmDimensions = {
-    DomainName = local.partsDomain[2]
-    ClientId   = local.parts[5]
+    DomainName = local.partsDomain[1]
+    ClientId   = local.parts[4]
   }
 }
+
+
 resource "aws_cloudwatch_metric_alarm" "health_red" {
   alarm_name          = "${var.alarm_prefix}: ElasticSearch health is red"
   comparison_operator = "GreaterThanOrEqualToThreshold"
