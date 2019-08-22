@@ -6,7 +6,7 @@ variable "actions" {
 variable "ok_actions" {
   description = "List of actions what should be executed"
   type        = list(string)
-  default = []
+  default     = []
 }
 
 variable "elasticsearch_domain_arn" {
@@ -166,8 +166,13 @@ variable "sql_unhealthy_treat_missing_data" {
 
 
 variable "freestorage_low_checks" {
-  type    = set(string)
-  default = [15, 10, 5, 1]
+  type    = map(number)
+  default = {
+    P1 = 1
+    P2 = 5
+    P3 = 10
+    P4 = 15
+  }
 }
 
 variable "freestorage_low_evaluation_periods" {

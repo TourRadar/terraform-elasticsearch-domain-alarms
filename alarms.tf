@@ -18,7 +18,7 @@ resource "aws_cloudwatch_metric_alarm" "health_red" {
   namespace           = "AWS/ES"
   period              = var.health_red_evaluation_period
   statistic           = "Maximum"
-  alarm_description   = "At least one primary shard and its replicas are not allocated to a node. See Red Cluster Status."
+  alarm_description   = "Priority: P1 At least one primary shard and its replicas are not allocated to a node. See Red Cluster Status."
   treat_missing_data  = var.health_red_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -35,7 +35,7 @@ resource "aws_cloudwatch_metric_alarm" "health_yellow" {
   namespace           = "AWS/ES"
   period              = var.health_yellow_evaluation_period
   statistic           = "Maximum"
-  alarm_description   = "At least one replica shard is not allocated to a node. See Yellow Cluster Status."
+  alarm_description   = "Priority: P2 At least one replica shard is not allocated to a node. See Yellow Cluster Status."
   treat_missing_data  = var.health_yellow_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -52,7 +52,7 @@ resource "aws_cloudwatch_metric_alarm" "sql_unhealthy" {
   namespace           = "AWS/ES"
   period              = var.sql_unhealthy_evaluation_period
   statistic           = "Maximum"
-  alarm_description   = "SQLUnhealthy triggring problems"
+  alarm_description   = "Priority: P1 SQLUnhealthy triggring problems"
   treat_missing_data  = var.sql_unhealthy_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -71,7 +71,7 @@ resource "aws_cloudwatch_metric_alarm" "freestorage_low" {
   namespace           = "AWS/ES"
   period              = var.freestorage_low_evaluation_period
   statistic           = "Minimum"
-  alarm_description   = "A node in your cluster is down to ${each.value} GiB of free storage space. See Lack of Available Storage Space. This value is in MiB, so rather than 10480, we recommend setting it to 25% of the storage space for each node."
+  alarm_description   = "Priority: ${each.key} A node in your cluster is down to ${each.value} GiB of free storage space. See Lack of Available Storage Space. This value is in MiB, so rather than 10480, we recommend setting it to 25% of the storage space for each node."
   treat_missing_data  = var.freestorage_low_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -89,7 +89,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_index_writes_blocked" {
   namespace           = "AWS/ES"
   period              = var.cluster_index_writes_blocked_evaluation_period
   statistic           = "Maximum"
-  alarm_description   = "Your cluster is blocking write requests. See ClusterBlockException"
+  alarm_description   = "Priority: P3 Your cluster is blocking write requests. See ClusterBlockException"
   treat_missing_data  = var.cluster_index_writes_blocked_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -108,7 +108,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_automated_snapshot_failure" {
   namespace           = "AWS/ES"
   period              = var.cluster_automated_snapshot_failure_evaluation_period
   statistic           = "Maximum"
-  alarm_description   = "An automated snapshot failed. This failure is often the result of a red cluster health status. See Red Cluster Status."
+  alarm_description   = "Priority: P4 An automated snapshot failed. This failure is often the result of a red cluster health status. See Red Cluster Status."
   treat_missing_data  = var.cluster_automated_snapshot_failure_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -125,7 +125,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_cpu_utilization" {
   namespace           = "AWS/ES"
   period              = var.cluster_cpu_utilization_evaluation_period
   statistic           = "Average"
-  alarm_description   = "100% CPU utilization isn't uncommon, but sustained high averages are problematic. Consider using larger instance types or adding instances."
+  alarm_description   = "Priority: P3 100% CPU utilization isn't uncommon, but sustained high averages are problematic. Consider using larger instance types or adding instances."
   treat_missing_data  = var.cluster_cpu_utilization_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -143,7 +143,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_jvm_memory_pressure" {
   namespace           = "AWS/ES"
   period              = var.cluster_jvm_memory_pressure_evaluation_period
   statistic           = "Average"
-  alarm_description   = "The cluster could encounter out of memory errors if usage increases. Consider scaling vertically. Amazon ES uses half of an instance's RAM for the Java heap, up to a heap size of 32 GiB. You can scale instances vertically up to 64 GiB of RAM, at which point you can scale horizontally by adding instances."
+  alarm_description   = "Priority: P3 The cluster could encounter out of memory errors if usage increases. Consider scaling vertically. Amazon ES uses half of an instance's RAM for the Java heap, up to a heap size of 32 GiB. You can scale instances vertically up to 64 GiB of RAM, at which point you can scale horizontally by adding instances."
   treat_missing_data  = var.cluster_jvm_memory_pressure_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -161,7 +161,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_master_cpu_utilization" {
   namespace           = "AWS/ES"
   period              = var.cluster_master_cpu_utilization_evaluation_period
   statistic           = "Average"
-  alarm_description   = "Consider using larger instance types for your dedicated master nodes. Because of their role in cluster stability and blue/green deployments, dedicated master nodes should have lower average CPU usage than data nodes."
+  alarm_description   = "Priority: P3 Consider using larger instance types for your dedicated master nodes. Because of their role in cluster stability and blue/green deployments, dedicated master nodes should have lower average CPU usage than data nodes."
   treat_missing_data  = var.cluster_master_cpu_utilization_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -180,7 +180,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_master_jvm_memory_pressure" {
   namespace           = "AWS/ES"
   period              = var.cluster_master_jvm_memory_pressure_period
   statistic           = "Average"
-  alarm_description   = "Consider using larger instance types for your dedicated master nodes. Because of their role in cluster stability and blue/green deployments, dedicated master nodes should have lower average CPU usage than data nodes."
+  alarm_description   = "Priority: P3 Consider using larger instance types for your dedicated master nodes. Because of their role in cluster stability and blue/green deployments, dedicated master nodes should have lower average CPU usage than data nodes."
   treat_missing_data  = var.cluster_master_jvm_memory_pressure_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -197,7 +197,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_5xx" {
   namespace           = "AWS/ES"
   period              = var.cluster_5xx_evaluation_period
   statistic           = "Sum"
-  alarm_description   = "ElasticSearch triggering 5xx http errors"
+  alarm_description   = "Priority: P2 ElasticSearch triggering 5xx http errors"
   treat_missing_data  = var.cluster_5xx_evaluation_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
@@ -214,7 +214,7 @@ resource "aws_cloudwatch_metric_alarm" "cluster_4xx" {
   namespace           = "AWS/ES"
   period              = var.cluster_4xx_evaluation_period
   statistic           = "Sum"
-  alarm_description   = "ElasticSearch triggering 4xx http errors"
+  alarm_description   = "Priority: P3 ElasticSearch triggering 4xx http errors"
   treat_missing_data  = var.cluster_4xx_evaluation_treat_missing_data
   alarm_actions       = var.actions
   ok_actions          = var.ok_actions
